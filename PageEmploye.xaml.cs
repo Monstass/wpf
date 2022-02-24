@@ -16,9 +16,6 @@ using System.Collections.ObjectModel;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Логика взаимодействия для PageEmploye.xaml
-    /// </summary>
     public partial class PageEmploye : Page
     {
         public static TitleEmployeEntities DataEntitiesEmploye { get; set; }
@@ -48,12 +45,12 @@ namespace WpfApp1
 
         private void UndoCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            isDirty = true;
+            MessageBox.Show("Отмена");
         }
 
         private void UndoCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            MessageBox.Show("Отмена");
+            isDirty = true;
             e.CanExecute = isDirty;
         }
 

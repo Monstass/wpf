@@ -8,12 +8,13 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WpfApp1</RootNamespace>
     <AssemblyName>WpfApp1</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,25 +66,29 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Employe.cs">
-      <DependentUpon>TitleEmployee.tt</DependentUpon>
+      <DependentUpon>TitleEmploye.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ListTitle.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>TitleEmploye.tt</DependentUpon>
     </Compile>
     <Compile Include="Title.cs">
-      <DependentUpon>TitleEmployee.tt</DependentUpon>
+      <DependentUpon>TitleEmploye.tt</DependentUpon>
     </Compile>
-    <Compile Include="TitleEmployee.Context.cs">
+    <Compile Include="TitleEmploye.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TitleEmployee.Context.tt</DependentUpon>
+      <DependentUpon>TitleEmploye.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="TitleEmployee.cs">
+    <Compile Include="TitleEmploye.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TitleEmployee.tt</DependentUpon>
+      <DependentUpon>TitleEmploye.tt</DependentUpon>
     </Compile>
-    <Compile Include="TitleEmployee.Designer.cs">
+    <Compile Include="TitleEmploye.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TitleEmployee.edmx</DependentUpon>
+      <DependentUpon>TitleEmploye.edmx</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -136,28 +141,16 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="TitleEmployee.edmx">
+    <EntityDeploy Include="TitleEmploye.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TitleEmployee.Designer.cs</LastGenOutput>
+      <LastGenOutput>TitleEmploye.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="TitleEmployee.edmx.diagram">
-      <DependentUpon>TitleEmployee.edmx</DependentUpon>
+    <None Include="TitleEmploye.edmx.diagram">
+      <DependentUpon>TitleEmploye.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TitleEmployee.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TitleEmployee.Context.cs</LastGenOutput>
-      <DependentUpon>TitleEmployee.edmx</DependentUpon>
-    </Content>
-    <Content Include="TitleEmployee.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TitleEmployee.edmx</DependentUpon>
-      <LastGenOutput>TitleEmployee.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Add.png" />
@@ -169,6 +162,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TitleEmploye.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TitleEmploye.edmx</DependentUpon>
+      <LastGenOutput>TitleEmploye.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TitleEmploye.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TitleEmploye.edmx</DependentUpon>
+      <LastGenOutput>TitleEmploye.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -26,6 +26,7 @@ namespace WpfApp1
         }
     
         public virtual DbSet<Employe> Employes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Title> Titles { get; set; }
     }
 }

@@ -8,7 +8,24 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageEmploye"
-      Loaded="Page_Loaded">
+      Loaded="Page_Loaded"
+      xmlns:core="clr-namespace:WpfApp1.Model">
+
+    <Page.Resources>
+        <core:ListTitle x:Key="listTitle"/>
+        
+        <DataTemplate x:Key="DateTemplate">
+            <TextBlock Text="{Binding BirthDate, StringFormat={}{0:dd\.}{0:MM\.}{0:yyyy}}"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EditingDateTemplate">
+            <DatePicker SelectedDate="{Binding BirthDate, 
+                        Mode=TwoWay, 
+                        UpdateSourceTrigger=PropertyChanged}"/>
+        </DataTemplate>
+    </Page.Resources>
+
 
     <StackPanel Margin="3" Background="{StaticResource BackGroundWindowResource}">
         <Menu>
@@ -59,8 +76,8 @@
                   Cursor="Hand"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
-                  Width="985">
-                
+                  Width="995">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Фамилия"
                                     Binding="{Binding Surname, 
@@ -74,11 +91,18 @@
                                     Binding="{Binding Patronymic, 
                                     Mode=TwoWay, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridCheckBoxColumn Header="Должность"
-                                        Binding="{Binding Patronymic, 
+                <DataGridComboBoxColumn Header="Должность"
+                                        ItemsSource="{
+                                        Binding Source={StaticResource listTitle}}"
+                                        DisplayMemberPath="Title1"
+                                        SelectedValueBinding="{Binding Path=TitleID,
                                         Mode=TwoWay, 
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTemplateColumn Header="Дата рождения"/>
+                                        UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="ID"/>
+                                        
+                <DataGridTemplateColumn Header="Дата рождения"
+                                        CellTemplate="{StaticResource DateTemplate}"
+                                        CellEditingTemplate="{StaticResource EditingDateTemplate}"/>
                 <DataGridTextColumn Header="Телефон"
                                         Binding="{Binding Telephone, 
                                         Mode=TwoWay, 
@@ -87,9 +111,9 @@
                                         Binding="{Binding Email, 
                                         Mode=TwoWay, 
                                         UpdateSourceTrigger=PropertyChanged}"/>
+                
             </DataGrid.Columns>
         </DataGrid>
-
     </StackPanel>
 
     <Page.CommandBindings>
@@ -97,7 +121,7 @@
         <CommandBinding Command="New" Executed="NewCommandBinding_Executed" CanExecute="NewCommandBinding_CanExecute" />
         <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" CanExecute="SaveCommandBinding_CanExecute" />
         <CommandBinding Command="Find" Executed="FindCommandBinding_Executed" CanExecute="FindCommandBinding_CanExecute" />
-       <!-- <CommandBinding Command="{x:Static command:DataCommands.Edit}" 
+        <!-- <CommandBinding Command="{x:Static command:DataCommands.Edit}" 
                         Executed="EditCommandBinding_Executed" CanExecute="EditCommandBinding_CanExecute" />
         <CommandBinding Command="{x:Static command:DataCommands.Delete}" Executed="DeleteCommandBinding_Executed" CanExecute="DeleteCommandBinding_CanExecute" /> -->
     </Page.CommandBindings>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("titleemployee.context.tt")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("titleemployee.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("titleemploye.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("titleemploye.tt")]
 
 

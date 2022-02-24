@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\Education\Максимов\WpfApp1\obj\Debug\
+D:\Учеба\Максимов\wpf\wpf\obj\Debug\
 WpfApp1
 none
 false
 DEBUG;TRACE
-F:\Education\Максимов\WpfApp1\App.xaml
-3-11830190
-2-1257294024
-14-91418553
-18862812486
+D:\Учеба\Максимов\wpf\wpf\App.xaml
+32044998663
+21203682651
+161774337407
+181551361611
 MainWindow.xaml;Page1.xaml;PageEmploye.xaml;
 
-False
+True
 
