@@ -15,9 +15,9 @@ namespace WpfApp1.Model
             DbSet<Title> titles = PageEmploye.DataEntitiesEmploye.Titles;
 
             var queryTitle = from title in titles select title;
-            foreach (Title title in queryTitle)
+            foreach (Title titl in queryTitle)
             {
-                this.Add(title);
+                this.Add(titl);
             }
         }
     }

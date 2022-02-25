@@ -24,9 +24,9 @@ namespace WpfApp1
         private bool isDirty = true;
         public PageEmploye()
         {
-            InitializeComponent();
             DataEntitiesEmploye = new TitleEmployeEntities();
             ListEmploye = new ObservableCollection<Employe>();
+            InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

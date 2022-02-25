@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="TitleEmployeModel.sysdiagram" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TitleEmployeModel.Title" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="TitleEmployeModel.FK_Employe_Title" ManuallyRouted="false" />
-        <AssociationConnector Association="TitleEmployeModel.FK_Title_Title" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

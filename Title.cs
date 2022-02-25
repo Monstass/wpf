@@ -14,7 +14,6 @@ namespace WpfApp1
     
     public partial class Title
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Title()
         {
             this.Employes = new HashSet<Employe>();
@@ -23,9 +22,6 @@ namespace WpfApp1
         public int ID { get; set; }
         public string Title1 { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employe> Employes { get; set; }
-        public virtual Title Title11 { get; set; }
-        public virtual Title Title2 { get; set; }
     }
 }

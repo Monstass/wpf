@@ -13,7 +13,7 @@
 
     <Page.Resources>
         <core:ListTitle x:Key="listTitle"/>
-        
+
         <DataTemplate x:Key="DateTemplate">
             <TextBlock Text="{Binding BirthDate, StringFormat={}{0:dd\.}{0:MM\.}{0:yyyy}}"
                    VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -25,7 +25,6 @@
                         UpdateSourceTrigger=PropertyChanged}"/>
         </DataTemplate>
     </Page.Resources>
-
 
     <StackPanel Margin="3" Background="{StaticResource BackGroundWindowResource}">
         <Menu>
