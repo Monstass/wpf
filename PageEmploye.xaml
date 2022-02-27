@@ -50,142 +50,150 @@
     </Page.CommandBindings>
 
     <StackPanel Margin="3" Background="{StaticResource BackGroundWindowResource}">
-        <Menu>
-            <MenuItem Header="Действие">
-                <MenuItem Header="Отменить" Command="Undo"></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Создать" Command="New"></MenuItem>
-                <MenuItem Header="Редактировать" Command="command:DataCommands.Edit" ></MenuItem>
-                <MenuItem Header="Сохранить" Command="Save"></MenuItem>
-                <MenuItem Header="Найти" Command="Find"></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Удалить" Command="command:DataCommands.Delete"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Отчет"></MenuItem>
-        </Menu>
-        <ToolBar Name="TooBar1" Margin="3">
-            <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание" Margin="5,2,5,2">
-                <Image Source="Images/Undo.png" />
-            </Button>
-            <Button Name="Add" Command="New" ToolTip="Добавить нового сотрудника" Margin="5,2,5,2">
-                <Image Source="Images/Add.png" />
-            </Button>
-            <Button Name="Edit" ToolTip="Редактировать" Margin="5,2,5,2">
-                <Image Source="Images/Edit.png" />
-            </Button>
-            <Button Name="Find" Command ="Find" ToolTip="Поиск" Margin="5,2,5,2">
-                <Image Source="Images/Find.png" />
-            </Button>
-            <Button Name="Save" Command="Save" ToolTip="Сохранить" Margin="5,2,5,2">
-                <Image Source="Images/Save.png" />
-            </Button>
-            <Button Name="Delete" Command="command:DataCommands.Delete" ToolTip="Удалить" Margin="5,2,5,2">
-                <Image Source="Images/Delete.png" />
-            </Button>
-        </ToolBar>
+        <StackPanel>
+            <Menu>
+                <MenuItem Header="Действие">
+                    <MenuItem Header="Отменить" Command="Undo"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Создать" Command="New"></MenuItem>
+                    <MenuItem Header="Редактировать" Command="command:DataCommands.Edit" ></MenuItem>
+                    <MenuItem Header="Сохранить" Command="Save"></MenuItem>
+                    <MenuItem Header="Найти" Command="Find"></MenuItem>
+                    <Separator></Separator>
+                    <MenuItem Header="Удалить" Command="command:DataCommands.Delete"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Отчет"></MenuItem>
+            </Menu>
+            <ToolBar Name="TooBar1" Margin="3">
+                <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание" Margin="5,2,5,2">
+                    <Image Source="Images/Undo.png" />
+                </Button>
+                <Button Name="Add" Command="New" ToolTip="Добавить нового сотрудника" Margin="5,2,5,2">
+                    <Image Source="Images/Add.png" />
+                </Button>
+                <Button Name="Edit" ToolTip="Редактировать" Margin="5,2,5,2">
+                    <Image Source="Images/Edit.png" />
+                </Button>
+                <Button Name="Find" Command ="Find" ToolTip="Поиск" Margin="5,2,5,2">
+                    <Image Source="Images/Find.png" />
+                </Button>
+                <Button Name="Save" Command="Save" ToolTip="Сохранить" Margin="5,2,5,2">
+                    <Image Source="Images/Save.png" />
+                </Button>
+                <Button Name="Delete" Command="command:DataCommands.Delete" ToolTip="Удалить" Margin="5,2,5,2">
+                    <Image Source="Images/Delete.png" />
+                </Button>
+            </ToolBar>
+        </StackPanel>
 
-        <DataGrid x:Name="DataGridEmpoyee"
-                  ItemsSource="{Binding}"
-                  AutoGenerateColumns="False"
-                  HorizontalAlignment="Left"
-                  MaxWidth="1000"
-                  MaxHeight="295"
-                  RowBackground="#FFE6D3EF"
-                  AlternatingRowBackground="#FC96CFD4"
-                  BorderBrush="#FF1F33EB"
-                  BorderThickness="3"
-                  RowHeight="25"
-                  Cursor="Hand"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  Width="995">
+        <StackPanel Orientation="Horizontal">
+            <StackPanel>
+                <DataGrid x:Name="DataGridEmpoyee"
+                          ItemsSource="{Binding}"
+                          AutoGenerateColumns="False"
+                          HorizontalAlignment="Left"
+                          MaxWidth="1000"
+                          MaxHeight="295"
+                          RowBackground="#FFE6D3EF"
+                          AlternatingRowBackground="#FC96CFD4"
+                          BorderBrush="#FF1F33EB"
+                          BorderThickness="3"
+                          RowHeight="25"
+                          Cursor="Hand"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          Width="995">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Фамилия"
-                                    Binding="{Binding Surname, 
-                                    Mode=TwoWay, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                
-                <DataGridTextColumn Header="Имя"
-                                    Binding="{Binding Name, 
-                                    Mode=TwoWay, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                
-                <DataGridTextColumn Header="Отчество"
-                                    Binding="{Binding Patronymic, 
-                                    Mode=TwoWay, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                
-                <DataGridComboBoxColumn Header="Должность"
-                                        ItemsSource="{
-                                        Binding Source={StaticResource listTitle}}"
-                                        DisplayMemberPath="Title1"
-                                        SelectedValueBinding="{Binding Path=TitleID,
-                                        Mode=TwoWay, 
-                                        UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="ID"/>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Фамилия"
+                                            Binding="{Binding Surname, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
 
-                <DataGridTemplateColumn Header="Дата рождения"
-                                        CellTemplate="{StaticResource DateTemplate}"
-                                        CellEditingTemplate="{StaticResource EditingDateTemplate}"/>
-                
-                <DataGridTextColumn Header="Телефон"
-                                    Binding="{Binding Telephone, 
-                                    Mode=TwoWay, 
-                                    UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="e-Mail" EditingElementStyle="{StaticResource errorStyle}">
-                    <DataGridTextColumn.Binding>
-                        <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
-                                 ValidatesOnExceptions="True">
-                            <Binding.ValidationRules>
-                                <rule:EmailRules/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
-            </DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя"
+                                            Binding="{Binding Name, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
 
-            <DataGrid.RowValidationErrorTemplate>
-                <ControlTemplate>
-                    <Grid Margin="0, -2, 0, -2"
-                          ToolTip="{Binding RelativeSource={RelativeSource FindAncestor,
-                                    AncestorType={x:Type DataGridRow}},
-                                    Path=(Validation.Errors)[0].ErrorContent}">
-                        <Ellipse StrokeThickness="0" Fill="Red" 
-                                 Width="{TemplateBinding FontSize}"
-                                 Height="{TemplateBinding FontSize}"/>
-                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}"
-                                   FontWeight="Bold" Foreground="White"
-                                   HorizontalAlignment="Center"/>
-                    </Grid>
-                </ControlTemplate>
-            </DataGrid.RowValidationErrorTemplate>
-        </DataGrid>
+                        <DataGridTextColumn Header="Отчество"
+                                            Binding="{Binding Patronymic, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
 
-        <Grid x:Name="BorderFind" Visibility="Visible">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Поиск"/>
-            <TextBlock Grid.Column="0" Grid.Row="1" Name="TextBlockSurname" Text="Фамилия" />
-            <TextBlock Grid.Column="0" Grid.Row="2" Name="TextBlockTitle" Text="Должность" />
-            <TextBox Grid.Column="1" Grid.Row="1"  Name="TextBoxSurname" TextChanged="TextBoxSurname_TextChanged" />
-            <ComboBox Grid.Column="1" Grid.Row="2" Name="ComboBoxTitle" ItemsSource="{Binding Source={StaticResource listTitle}}"
-              DisplayMemberPath="Title1" SelectionChanged="ComboBoxTitle_SelectionChanged" />
-            <Button Grid.Column="2" Grid.Row="1" Name="ButtonFindSurname" ToolTip="Поиск по фамилии" IsEnabled="False" Click="ButtonFindSurname_Click">
-                <Image Source="Images/Find.png"/>
-            </Button>
-            <Button Grid.Column="2" Grid.Row="2" Name="ButtonFindTitle" ToolTip="Поиск по должности" IsEnabled="False" Click="ButtonFindTitle_Click" RenderTransformOrigin="0,0.043">
-                <Image Source="Images/Find.png" RenderTransformOrigin="-0.368,-0.263" />
-            </Button>
-        </Grid>
+                        <DataGridComboBoxColumn Header="Должность"
+                                                ItemsSource="{
+                                                Binding Source={StaticResource listTitle}}"
+                                                DisplayMemberPath="Title1"
+                                                SelectedValueBinding="{Binding Path=TitleID,
+                                                Mode=TwoWay, 
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                                SelectedValuePath="ID"/>
+
+                        <DataGridTemplateColumn Header="Дата рождения"
+                                                CellTemplate="{StaticResource DateTemplate}"
+                                                CellEditingTemplate="{StaticResource EditingDateTemplate}"/>
+
+                        <DataGridTextColumn Header="Телефон"
+                                            Binding="{Binding Telephone, 
+                                            Mode=TwoWay, 
+                                            UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="e-Mail" EditingElementStyle="{StaticResource errorStyle}">
+                            <DataGridTextColumn.Binding>
+                                <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                         ValidatesOnExceptions="True">
+                                    <Binding.ValidationRules>
+                                        <rule:EmailRules/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowValidationErrorTemplate>
+                        <ControlTemplate>
+                            <Grid Margin="0, -2, 0, -2"
+                                  ToolTip="{Binding RelativeSource={RelativeSource FindAncestor,
+                                            AncestorType={x:Type DataGridRow}},
+                                            Path=(Validation.Errors)[0].ErrorContent}">
+                                <Ellipse StrokeThickness="0" Fill="Red" 
+                                         Width="{TemplateBinding FontSize}"
+                                         Height="{TemplateBinding FontSize}"/>
+                                <TextBlock Text="!" FontSize="{TemplateBinding FontSize}"
+                                           FontWeight="Bold" Foreground="White"
+                                           HorizontalAlignment="Center"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </DataGrid.RowValidationErrorTemplate>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Margin="30, 0">
+                <Grid x:Name="BorderFind" Visibility="Visible" Background="{StaticResource BackGroundWindowResource}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Поиск"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Name="TextBlockSurname" Text="Фамилия" />
+                    <TextBlock Grid.Column="0" Grid.Row="2" Name="TextBlockTitle" Text="Должность" />
+                    <TextBox Grid.Column="1" Grid.Row="1"  Name="TextBoxSurname" TextChanged="TextBoxSurname_TextChanged" />
+                    <ComboBox Grid.Column="1" Grid.Row="2" Name="ComboBoxTitle" ItemsSource="{Binding Source={StaticResource listTitle}}"
+                  DisplayMemberPath="Title1" SelectionChanged="ComboBoxTitle_SelectionChanged" />
+                    <Button Grid.Column="2" Grid.Row="1" Name="ButtonFindSurname" ToolTip="Поиск по фамилии" IsEnabled="False" Click="ButtonFindSurname_Click">
+                        <Image Source="Images/Find.png"/>
+                    </Button>
+                    <Button Grid.Column="2" Grid.Row="2" Name="ButtonFindTitle" ToolTip="Поиск по должности" IsEnabled="False" Click="ButtonFindTitle_Click" RenderTransformOrigin="0,0.043">
+                        <Image Source="Images/Find.png" RenderTransformOrigin="-0.368,-0.263" />
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </Page>
