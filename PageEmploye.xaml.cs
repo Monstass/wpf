@@ -70,7 +70,7 @@ namespace WpfApp1
 
         private void FindCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Найти");
+            BorderFind.Visibility = System.Windows.Visibility.Visible;
         }
         private void FindCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -175,6 +175,65 @@ namespace WpfApp1
             }
 
             isDirty = true;
+        }
+
+        private void TextBoxSurname_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ButtonFindSurname.IsEnabled = true;
+            ButtonFindTitle.IsEnabled = true;
+            ComboBoxTitle.SelectedIndex = -1;
+        }
+
+        private void ButtonFindSurname_Click(object sender, RoutedEventArgs e)
+        {
+            string surname = TextBoxSurname.Text;
+            DataEntitiesEmploye = new TitleEmployeEntities();
+            ListEmploye.Clear();
+
+            var employes = DataEntitiesEmploye.Employes;
+            var queryEmploye = from employe in employes
+                               where employe.Surname == surname
+                               select employe;
+            foreach (Employe emp in queryEmploye)
+            {
+                ListEmploye.Add(emp);
+            }
+
+            if (ListEmploye.Count > 0)
+            {
+                DataGridEmpoyee.ItemsSource = ListEmploye;
+                ButtonFindSurname.IsEnabled = true;
+                ButtonFindTitle.IsEnabled = false;
+            }
+            else
+                MessageBox.Show("Сотрудник с фамилией " + surname + "не найден",
+                                "Внимание!", MessageBoxButton.OK, 
+                                MessageBoxImage.Warning);
+        }
+
+        private void ComboBoxTitle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ButtonFindTitle.IsEnabled = true;
+            ButtonFindSurname.IsEnabled = false;
+            TextBoxSurname.Text = "";
+        }
+
+        private void ButtonFindTitle_Click(object sender, RoutedEventArgs e)
+        {
+            DataEntitiesEmploye = new TitleEmployeEntities();
+            ListEmploye.Clear();
+
+            Title title = ComboBoxTitle.SelectedItem as Title;
+            var employes = DataEntitiesEmploye.Employes;
+            var queryEmploye = from employe in employes
+                               where employe.TitleID == title.ID
+                               orderby employe.Surname
+                               select employe;
+            foreach (Employe emp in queryEmploye)
+            {
+                ListEmploye.Add(emp);
+            }
+            DataGridEmpoyee.ItemsSource = ListEmploye;
         }
     }
 }
