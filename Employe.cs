@@ -24,5 +24,22 @@ namespace WpfApp1
         public int TitleID { get; set; }
     
         public virtual Title Title { get; set; }
+
+        static Employe emp;
+
+        public static Employe createEmploye(int ID, string Surname, string Name, 
+                                            string Patronymic, int TitleID)
+        {
+            emp = new Employe();
+            emp.ID = ID;
+            emp.Surname = Surname;
+            emp.Name = Name;
+            emp.Patronymic = Patronymic;
+            emp.TitleID = TitleID;
+            emp.Telephone = "Не задано";
+            emp.Email = "Не задано";
+
+            return emp;
+        }
     }
 }

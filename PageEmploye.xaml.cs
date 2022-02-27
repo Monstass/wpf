@@ -31,6 +31,12 @@ namespace WpfApp1
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            GetEmploye();
+            DataGridEmpoyee.SelectedIndex = 0;
+        }
+
+        private void GetEmploye()
+        {
             var employees = DataEntitiesEmploye.Employes;
             var queryEmploye = from employee in employees
                                orderby employee.Surname
@@ -43,31 +49,28 @@ namespace WpfApp1
             DataGridEmpoyee.ItemsSource = ListEmploye;
         }
 
+        private void RewriteEmploye()
+        {
+            DataEntitiesEmploye = new TitleEmployeEntities();
+            ListEmploye.Clear();
+            GetEmploye();
+        }
+
         private void UndoCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Отмена");
+            RewriteEmploye();
+            DataGridEmpoyee.IsReadOnly = true;
+            isDirty = true;
         }
 
         private void UndoCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            isDirty = true;
             e.CanExecute = isDirty;
-        }
-
-        private void NewCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            MessageBox.Show("Создать");
-            isDirty = true;
-        }
-        private void NewCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
         }
 
         private void FindCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             MessageBox.Show("Найти");
-            isDirty = true;
         }
         private void FindCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
@@ -76,30 +79,102 @@ namespace WpfApp1
 
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Удалить");
+            Employe emp = DataGridEmpoyee.SelectedItem as Employe;
             isDirty = true;
+            if (emp != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Удалить сотрудника: " +
+                                                          emp.Surname.Trim() + " " + 
+                                                          emp.Name.Trim() + " " +
+                                                          emp.Patronymic.Trim(), 
+                                                          "Внимание", 
+                                                          MessageBoxButton.OKCancel);
+                
+                if (result == MessageBoxResult.OK)
+                {
+                    DataEntitiesEmploye.Employes.Remove(emp);
+                    DataGridEmpoyee.SelectedIndex = DataGridEmpoyee.SelectedIndex == 0 ? 1 : DataGridEmpoyee.SelectedIndex - 1;
+                    ListEmploye.Remove(emp);
+                    DataEntitiesEmploye.SaveChanges();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выбери строку");
+            }
         }
+
         private void DeleteCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = isDirty;
+            e.CanExecute = !isDirty;
         }
+
         private void EditCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = isDirty;
         }
+
         private void EditCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Редактировать");
-            isDirty = true;
+            MessageBoxResult result = MessageBox.Show("Войти в режим редактирования?", 
+                                                      "Внимание!", 
+                                                      MessageBoxButton.YesNo, 
+                                                      MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                isDirty = false;
+            }  
         }
+
         private void SaveCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = !isDirty;
         }
+
         private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Сохранение");
-            isDirty = false;
+            try
+            {
+                DataEntitiesEmploye.SaveChanges();
+                DataGridEmpoyee.IsReadOnly = true;
+                MessageBox.Show("Сохранено!", "Сохранение" ,MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка сохранения", "Ошибка!",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            isDirty = true;
+            
+        }
+
+        private void AddCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !isDirty;
+        }
+
+        private void AddCommandBinding_executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Employe emp = Employe.createEmploye(-1, "Не задано", "Не задано", 
+                                                "Не задано", 0);
+
+            try
+            {
+                DataEntitiesEmploye.Employes.Add(emp);
+                ListEmploye.Add(emp);
+                DataGridEmpoyee.ScrollIntoView(emp);
+                DataGridEmpoyee.SelectedIndex = DataGridEmpoyee.Items.Count - 1;
+                DataGridEmpoyee.Focus();
+                DataGridEmpoyee.IsReadOnly = false;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            isDirty = true;
         }
     }
 }

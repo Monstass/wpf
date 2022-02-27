@@ -9,7 +9,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PageEmploye"
       Loaded="Page_Loaded"
-      xmlns:core="clr-namespace:WpfApp1.Model">
+      xmlns:core="clr-namespace:WpfApp1.Model"
+      xmlns:rule="clr-namespace:WpfApp1.ValidationRules">
 
     <Page.Resources>
         <core:ListTitle x:Key="listTitle"/>
@@ -24,7 +25,29 @@
                         Mode=TwoWay, 
                         UpdateSourceTrigger=PropertyChanged}"/>
         </DataTemplate>
+
+        <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Padding" Value="-2"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                    <Setter Property="BorderThickness" Value="1"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},
+                                                       Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Page.Resources>
+
+    <Page.CommandBindings>
+        <CommandBinding Command="Undo" Executed="UndoCommandBinding_Executed" CanExecute="UndoCommandBinding_CanExecute" />
+        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" CanExecute="SaveCommandBinding_CanExecute" />
+        <CommandBinding Command="Find" Executed="FindCommandBinding_Executed" CanExecute="FindCommandBinding_CanExecute" />
+        <CommandBinding Command="New" Executed="AddCommandBinding_executed" CanExecute="AddCommandBinding_CanExecute"/>
+        <CommandBinding Command="{x:Static command:DataCommands.Edit}" 
+                        Executed="EditCommandBinding_Executed" CanExecute="EditCommandBinding_CanExecute" />
+        <CommandBinding Command="{x:Static command:DataCommands.Delete}" Executed="DeleteCommandBinding_Executed" CanExecute="DeleteCommandBinding_CanExecute" />
+    </Page.CommandBindings>
 
     <StackPanel Margin="3" Background="{StaticResource BackGroundWindowResource}">
         <Menu>
@@ -32,11 +55,11 @@
                 <MenuItem Header="Отменить" Command="Undo"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="Создать" Command="New"></MenuItem>
-                <MenuItem Header="Редактировать" ></MenuItem>
+                <MenuItem Header="Редактировать" Command="command:DataCommands.Edit" ></MenuItem>
                 <MenuItem Header="Сохранить" Command="Save"></MenuItem>
                 <MenuItem Header="Найти" Command="Find"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Удалить"></MenuItem>
+                <MenuItem Header="Удалить" Command="command:DataCommands.Delete"></MenuItem>
             </MenuItem>
             <MenuItem Header="Отчет"></MenuItem>
         </Menu>
@@ -56,7 +79,7 @@
             <Button Name="Save" Command="Save" ToolTip="Сохранить" Margin="5,2,5,2">
                 <Image Source="Images/Save.png" />
             </Button>
-            <Button Name="Delete" ToolTip="Удалить" Margin="5,2,5,2">
+            <Button Name="Delete" Command="command:DataCommands.Delete" ToolTip="Удалить" Margin="5,2,5,2">
                 <Image Source="Images/Delete.png" />
             </Button>
         </ToolBar>
@@ -82,14 +105,17 @@
                                     Binding="{Binding Surname, 
                                     Mode=TwoWay, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <DataGridTextColumn Header="Имя"
                                     Binding="{Binding Name, 
                                     Mode=TwoWay, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <DataGridTextColumn Header="Отчество"
                                     Binding="{Binding Patronymic, 
                                     Mode=TwoWay, 
                                     UpdateSourceTrigger=PropertyChanged}"/>
+                
                 <DataGridComboBoxColumn Header="Должность"
                                         ItemsSource="{
                                         Binding Source={StaticResource listTitle}}"
@@ -98,30 +124,42 @@
                                         Mode=TwoWay, 
                                         UpdateSourceTrigger=PropertyChanged}"
                                         SelectedValuePath="ID"/>
-                                        
+
                 <DataGridTemplateColumn Header="Дата рождения"
                                         CellTemplate="{StaticResource DateTemplate}"
                                         CellEditingTemplate="{StaticResource EditingDateTemplate}"/>
-                <DataGridTextColumn Header="Телефон"
-                                        Binding="{Binding Telephone, 
-                                        Mode=TwoWay, 
-                                        UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="e-Mail"
-                                        Binding="{Binding Email, 
-                                        Mode=TwoWay, 
-                                        UpdateSourceTrigger=PropertyChanged}"/>
                 
+                <DataGridTextColumn Header="Телефон"
+                                    Binding="{Binding Telephone, 
+                                    Mode=TwoWay, 
+                                    UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="e-Mail" EditingElementStyle="{StaticResource errorStyle}">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Email" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged"
+                                 ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <rule:EmailRules/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
             </DataGrid.Columns>
+
+            <DataGrid.RowValidationErrorTemplate>
+                <ControlTemplate>
+                    <Grid Margin="0, -2, 0, -2"
+                          ToolTip="{Binding RelativeSource={RelativeSource FindAncestor,
+                                    AncestorType={x:Type DataGridRow}},
+                                    Path=(Validation.Errors)[0].ErrorContent}">
+                        <Ellipse StrokeThickness="0" Fill="Red" 
+                                 Width="{TemplateBinding FontSize}"
+                                 Height="{TemplateBinding FontSize}"/>
+                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}"
+                                   FontWeight="Bold" Foreground="White"
+                                   HorizontalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </DataGrid.RowValidationErrorTemplate>
         </DataGrid>
     </StackPanel>
-
-    <Page.CommandBindings>
-        <CommandBinding Command="Undo" Executed="UndoCommandBinding_Executed" CanExecute="UndoCommandBinding_CanExecute" />
-        <CommandBinding Command="New" Executed="NewCommandBinding_Executed" CanExecute="NewCommandBinding_CanExecute" />
-        <CommandBinding Command="Save" Executed="SaveCommandBinding_Executed" CanExecute="SaveCommandBinding_CanExecute" />
-        <CommandBinding Command="Find" Executed="FindCommandBinding_Executed" CanExecute="FindCommandBinding_CanExecute" />
-        <!-- <CommandBinding Command="{x:Static command:DataCommands.Edit}" 
-                        Executed="EditCommandBinding_Executed" CanExecute="EditCommandBinding_CanExecute" />
-        <CommandBinding Command="{x:Static command:DataCommands.Delete}" Executed="DeleteCommandBinding_Executed" CanExecute="DeleteCommandBinding_CanExecute" /> -->
-    </Page.CommandBindings>
 </Page>
