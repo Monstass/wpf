@@ -47,6 +47,7 @@
         <CommandBinding Command="{x:Static command:DataCommands.Edit}" 
                         Executed="EditCommandBinding_Executed" CanExecute="EditCommandBinding_CanExecute" />
         <CommandBinding Command="{x:Static command:DataCommands.Delete}" Executed="DeleteCommandBinding_Executed" CanExecute="DeleteCommandBinding_CanExecute" />
+        <CommandBinding Command="Refresh" Executed="RefreshCommandBinding_Executed"/>
     </Page.CommandBindings>
 
     <StackPanel Margin="3" Background="{StaticResource BackGroundWindowResource}">
@@ -60,28 +61,31 @@
                     <MenuItem Header="Сохранить" Command="Save"></MenuItem>
                     <MenuItem Header="Найти" Command="Find"></MenuItem>
                     <Separator></Separator>
-                    <MenuItem Header="Удалить" Command="command:DataCommands.Delete"></MenuItem>
+                    <MenuItem Header="Обновить" Command="Refresh"/>
                 </MenuItem>
                 <MenuItem Header="Отчет"></MenuItem>
             </Menu>
             <ToolBar Name="TooBar1" Margin="3">
                 <Button Name="Undo" Command="Undo" ToolTip="Отменить редактирование/создание" Margin="5,2,5,2">
-                    <Image Source="Images/Undo.png" />
+                    <Image Height="24" Width="24" Source="Images/Undo.png" />
                 </Button>
                 <Button Name="Add" Command="New" ToolTip="Добавить нового сотрудника" Margin="5,2,5,2">
-                    <Image Source="Images/Add.png" />
+                    <Image Height="24" Width="24" Source="Images/Add.png" />
                 </Button>
                 <Button Name="Edit" ToolTip="Редактировать" Margin="5,2,5,2">
-                    <Image Source="Images/Edit.png" />
+                    <Image Height="24" Width="24" Source="Images/Edit.png" />
                 </Button>
                 <Button Name="Find" Command ="Find" ToolTip="Поиск" Margin="5,2,5,2">
-                    <Image Source="Images/Find.png" />
+                    <Image Height="24" Width="24" Source="Images/Find.png" />
                 </Button>
                 <Button Name="Save" Command="Save" ToolTip="Сохранить" Margin="5,2,5,2">
-                    <Image Source="Images/Save.png" />
+                    <Image Height="24" Width="24" Source="Images/Save.png" />
+                </Button>
+                <Button Name="Refresh" Command="Refresh" ToolTip="Обновить данные" Margin="5,2,5,2">
+                    <Image Height="24" Width="24" Source="Images/Refresh.png" />
                 </Button>
                 <Button Name="Delete" Command="command:DataCommands.Delete" ToolTip="Удалить" Margin="5,2,5,2">
-                    <Image Source="Images/Delete.png" />
+                    <Image Height="24" Width="24" Source="Images/Delete.png" />
                 </Button>
             </ToolBar>
         </StackPanel>
@@ -168,19 +172,19 @@
             </StackPanel>
 
             <StackPanel Margin="30, 0">
-                <Grid x:Name="BorderFind" Visibility="Visible" Background="{StaticResource BackGroundWindowResource}">
+                <Grid x:Name="BorderFind" Visibility="Hidden" Background="{StaticResource BackGroundWindowResource}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="30"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
+                        <RowDefinition Height="20"></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="150"></ColumnDefinition>
+                        <ColumnDefinition Width="30"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="1" Grid.Row="0" TextWrapping="Wrap" Text="Поиск"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Margin="20, 0" TextWrapping="Wrap" Text="Поиск" FontSize="15" FontWeight="Bold"/>
                     <TextBlock Grid.Column="0" Grid.Row="1" Name="TextBlockSurname" Text="Фамилия" />
                     <TextBlock Grid.Column="0" Grid.Row="2" Name="TextBlockTitle" Text="Должность" />
                     <TextBox Grid.Column="1" Grid.Row="1"  Name="TextBoxSurname" TextChanged="TextBoxSurname_TextChanged" />

@@ -80,13 +80,12 @@ namespace WpfApp1
         private void DeleteCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Employe emp = DataGridEmpoyee.SelectedItem as Employe;
-            isDirty = true;
             if (emp != null)
             {
                 MessageBoxResult result = MessageBox.Show("Удалить сотрудника: " +
                                                           emp.Surname.Trim() + " " + 
                                                           emp.Name.Trim() + " " +
-                                                          emp.Patronymic.Trim(), 
+                                                          emp.Patronymic.Trim() + "?", 
                                                           "Внимание", 
                                                           MessageBoxButton.OKCancel);
                 
@@ -147,7 +146,6 @@ namespace WpfApp1
             }
 
             isDirty = true;
-            
         }
 
         private void AddCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -173,8 +171,6 @@ namespace WpfApp1
             {
                 MessageBox.Show(ex.ToString());
             }
-
-            isDirty = true;
         }
 
         private void TextBoxSurname_TextChanged(object sender, TextChangedEventArgs e)
@@ -206,7 +202,7 @@ namespace WpfApp1
                 ButtonFindTitle.IsEnabled = false;
             }
             else
-                MessageBox.Show("Сотрудник с фамилией " + surname + "не найден",
+                MessageBox.Show("Сотрудник с фамилией '" + surname + "' не найден",
                                 "Внимание!", MessageBoxButton.OK, 
                                 MessageBoxImage.Warning);
         }
@@ -234,6 +230,14 @@ namespace WpfApp1
                 ListEmploye.Add(emp);
             }
             DataGridEmpoyee.ItemsSource = ListEmploye;
+        }
+
+        private void RefreshCommandBinding_Executed(object sender, RoutedEventArgs e)
+        {
+            RewriteEmploye();
+            DataGridEmpoyee.IsReadOnly = false;
+            isDirty = true;
+            BorderFind.Visibility = Visibility.Hidden;
         }
     }
 }
